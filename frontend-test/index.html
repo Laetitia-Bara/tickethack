@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Tickethack — Home</title>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="nav">
+            <div class="brand"><img src="./assets/train.png" alt="train" /> Tickethack</div>
+            <div class="links">
+                <a href="./index.html">Home</a>
+                <a href="./cart.html">Cart</a>
+                <a href="./bookings.html">Bookings</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="card">
+                <h1 class="h1">Search your trip</h1>
+                <div class="row">
+                    <input id="departure" placeholder="Departure (ex: Paris)" />
+                    <input id="arrival" placeholder="Arrival (ex: Lyon)" />
+                </div>
+                <div class="row">
+                    <input id="date" type="date" />
+                    <button id="searchBtn" class="primary">Search</button>
+                </div>
+                <p class="small">Tip: Your backend must be running on localhost:3000</p>
+            </div>
+
+            <div class="card">
+                <h1 class="h1">Results</h1>
+                <div id="results" class="resultsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./index.js"></script>
+</body>
+
+</html>
