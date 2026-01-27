@@ -26,18 +26,20 @@ function fmtTime(isoDate) {
 
 function renderEmptyStart() {
   resultsEl.innerHTML = `
-    <div class="empty">
+    <div class="resultsEmpty">
       <img src="./assets/train.png" alt="train" />
-      <p>It’s time to book your future trip.</p>
+      <div class="hr"></div>
+      <p class="meta">It’s time to book your future trip.</p>
     </div>
   `;
 }
 
 function renderNoTrips() {
   resultsEl.innerHTML = `
-    <div class="empty">
+    <div class="resultsEmpty">
       <img src="./assets/notfound.png" alt="notfound" />
-      <p>No trip found.</p>
+      <div class="hr"></div>
+      <p class="meta">No trip found.</p>
     </div>
   `;
 }

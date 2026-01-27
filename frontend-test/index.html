@@ -9,36 +9,36 @@
 </head>
 
 <body>
-    <div class="hero">
-        <div class="nav">
-            <div class="brand"><img src="./assets/train.png" alt="train" /> Tickethack</div>
-            <div class="links">
-                <a href="./index.html">Home</a>
-                <a href="./cart.html">Cart</a>
-                <a href="./bookings.html">Bookings</a>
-            </div>
+    <header>
+        <div class="brand">Tickethack</div>
+        <nav class="navlinks">
+            <a href="./cart.html">Cart</a>
+            <a href="./bookings.html">Bookings</a>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <div class="heroText">
+            <h1>Explore the world effortlessly by train!</h1>
+            <p>Compare, book and enjoy cheap prices for train tickets: your journey starts on Tickethack.</p>
         </div>
-
-        <div class="container">
+    
+        <div class="mainGrid">
             <div class="card">
-                <h1 class="h1">Search your trip</h1>
-                <div class="row">
-                    <input id="departure" placeholder="Departure (ex: Paris)" />
-                    <input id="arrival" placeholder="Arrival (ex: Lyon)" />
+                <div class="stack">
+                    <input id="departure" class="input" placeholder="Departure" />
+                    <input id="arrival" class="input" placeholder="Arrival" />
+                    <input id="date" class="input" type="date" />
+                    <button id="searchBtn" class="btn">Search</button>
                 </div>
-                <div class="row">
-                    <input id="date" type="date" />
-                    <button id="searchBtn" class="primary">Search</button>
-                </div>
-                <p class="small">Tip: Your backend must be running on localhost:3000</p>
             </div>
-
+    
             <div class="card">
-                <h1 class="h1">Results</h1>
                 <div id="results" class="resultsList"></div>
             </div>
         </div>
-    </div>
+    </section>
+
 
     <script src="./index.js"></script>
 </body>
