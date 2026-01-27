@@ -81,7 +81,7 @@ purchaseBtn.addEventListener("click", async () => {
   }
 
   setCart([]);
-  window.location.assign("./bookings.html");
+  window.location.assign("./booking.html");
 });
 
 renderCart();
