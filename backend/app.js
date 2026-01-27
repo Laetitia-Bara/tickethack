@@ -1,9 +1,8 @@
 require("dotenv").config();
-require("./models/connection");
 
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
+const { connectDB } = require("./models/connection");
 
 const indexRouter = require("./routes/index");
 const tripsRouter = require("./routes/trips");
@@ -14,10 +13,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected, Youhouuuuu !!!"))
-  .catch((err) => console.error(err));
+connectDB().catch((err) => {
+  console.error("❌ MongoDB erreur de connexion:", err.message);
+});
 
 app.use("/", indexRouter);
 app.use("/trips", tripsRouter);

@@ -1,9 +1,20 @@
 const mongoose = require("mongoose");
 
-const connectionString = "mongodb+srv://.../todoapp";
+async function connectDB() {
+  const mongoUri = process.env.MONGO_URI;
 
-mongoose
-  .connect(connectionString, { connectTimeoutMS: 2000 })
-  .then(() => console.log("Database connected"))
+  if (!mongoUri) {
+    throw new Error("problème clé Mongo");
+  }
 
-  .catch((error) => console.error(error));
+  // Evite de reconnecter si déjà connecté
+  if (mongoose.connection.readyState === 1) return mongoose.connection;
+
+  mongoose.set("strictQuery", true);
+  await mongoose.connect(mongoUri);
+
+  console.log("MongoDB connected ! Youhouuuuuu !");
+  return mongoose.connection;
+}
+
+module.exports = { connectDB };
