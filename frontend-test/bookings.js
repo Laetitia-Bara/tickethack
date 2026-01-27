@@ -1,4 +1,6 @@
-const BACKEND_URL = "http://localhost:3000";
+//const BACKEND_URL = "http://localhost:3000";
+const BACKEND_URL = "https://tickethack-backend-liart.vercel.app";
+
 const rowsEl = document.querySelector("#bookingsRows");
 
 function renderEmpty() {

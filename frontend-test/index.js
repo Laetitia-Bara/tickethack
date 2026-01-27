@@ -1,4 +1,5 @@
-const BACKEND_URL = "http://localhost:3000";
+//const BACKEND_URL = "http://localhost:3000";
+const BACKEND_URL = "https://tickethack-backend-liart.vercel.app";
 
 const depEl = document.querySelector("#departure");
 const arrEl = document.querySelector("#arrival");
