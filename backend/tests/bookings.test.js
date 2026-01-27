@@ -12,6 +12,9 @@ beforeAll(async () => {
   // Démarre Mongo en mémoire
   mongoServer = await MongoMemoryServer.create();
   process.env.MONGO_URI = mongoServer.getUri();
+
+  await mongoose.connect(process.env.MONGO_URI);
+
   app = require("../app");
 
   if (mongoose.connection.readyState !== 1) {
@@ -26,6 +29,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
+  await mongoose.connection.close(true);
   await mongoose.disconnect();
   await mongoServer.stop();
 });

@@ -13,9 +13,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-connectDB().catch((err) => {
-  console.error("❌ MongoDB erreur de connexion:", err.message);
-});
+// Connexion Mongo (sauf en test)
+if (process.env.NODE_ENV !== "test") {
+  connectDB().catch((err) => {
+    console.error("❌ MongoDB erreur de connexion:", err.message);
+  });
+}
 
 app.use("/", indexRouter);
 app.use("/trips", tripsRouter);
