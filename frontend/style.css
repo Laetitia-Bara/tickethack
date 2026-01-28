@@ -525,7 +525,7 @@ h1, p {
 #results-list {
   flex: 1;
   overflow-y: auto;
-  width: 100%;
+  max-width: 100%;
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
