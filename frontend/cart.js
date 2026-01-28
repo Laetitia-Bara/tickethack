@@ -82,7 +82,6 @@ purchaseBtn.addEventListener("click", async () => {
   }
 
   setCart([]);
-  // ⚠️ Mets ici le bon nom de ton fichier bookings :
   window.location.assign("./bookings.html");
 });
 
