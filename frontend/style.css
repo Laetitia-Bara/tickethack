@@ -208,3 +208,20 @@ h1, p {
   opacity: .6;
   cursor: not-allowed;
 }
+
+#purchaseBtn {
+  width: 12vw;
+  min-width: 140px;
+  padding: 12px;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: rgb(5, 153, 141);
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+#purchaseBtn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}

@@ -6,7 +6,7 @@ const totalEl = document.querySelector("#total");
 const purchaseBtn = document.querySelector("#purchaseBtn");
 
 function getCart() {
-  return JSON.parse(localStorage.getItem("cart") || "[]");
+  return JSON.parse(localStorage.getItem("cart") || "[]"); // [{_id, departure, arrival, date, price}]
 }
 function setCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
@@ -25,9 +25,9 @@ function renderCart() {
 
   if (cart.length === 0) {
     rowsEl.innerHTML = `
-      <div class="empty">
-        <img src="./assets/notfound.png" alt="notfound" />
-        <p>Your cart is empty.</p>
+      <div style="text-align:center; padding: 20px 0;">
+        <p style="margin:0; font-weight:700;">No tickets in your cart</p>
+        <p style="margin:6px 0 0; color:#6b7280;">Why not plan a trip?</p>
       </div>
     `;
     totalEl.textContent = "0€";
@@ -43,16 +43,16 @@ function renderCart() {
   rowsEl.innerHTML = cart
     .map(
       (t) => `
-    <div class="tripRow">
-      <div>
-        <div class="route">${t.departure} &gt; ${t.arrival}</div>
-        <div class="meta">${new Date(t.date).toLocaleDateString()}</div>
+      <div class="tripRow">
+        <div>
+          <div class="route">${t.departure} > ${t.arrival}</div>
+          <div class="meta">${new Date(t.date).toLocaleDateString()}</div>
+        </div>
+        <div class="meta">${fmtTime(t.date)}</div>
+        <div class="price">${t.price}€</div>
+        <button class="miniBtn delBtn" data-id="${t._id}" style="background:#ef4444;">X</button>
       </div>
-      <div class="meta">${fmtTime(t.date)}</div>
-      <div class="price">${t.price}€</div>
-      <button class="danger delBtn" data-id="${t._id}">X</button>
-    </div>
-  `,
+    `,
     )
     .join("");
 
@@ -75,13 +75,15 @@ purchaseBtn.addEventListener("click", async () => {
   });
 
   const data = await res.json();
+
   if (!data.result) {
     alert(data.error || "Purchase failed");
     return;
   }
 
   setCart([]);
-  window.location.assign("./booking.html");
+  // ⚠️ Mets ici le bon nom de ton fichier bookings :
+  window.location.assign("./bookings.html");
 });
 
 renderCart();
