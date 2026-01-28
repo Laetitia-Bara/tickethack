@@ -162,13 +162,14 @@ document.querySelectorAll("form").forEach((f) => {
   f.addEventListener("submit", (e) => e.preventDefault());
 });
 
-// Ajout connexion user
-const LOGIN = "Clovis";
-const PASSWORD = "clovisthebest";
-
+//Ajout connexion user
 const loginBtn = document.querySelector("#loginBtn");
 const logoutBtn = document.querySelector("#logoutBtn");
 const userBadge = document.querySelector("#user-badge");
+
+loginBtn?.addEventListener("click", () => {
+  window.location.href = "login.html";
+});
 
 function refreshUserUI() {
   const user = localStorage.getItem("user");
@@ -191,8 +192,3 @@ logoutBtn?.addEventListener("click", () => {
 });
 
 refreshUserUI();
-
-// mot de passe oublié
-forgotPwd.addEventListener("click", () => {
-  alert(`Login : ${LOGIN}\nMot de passe : ${PASSWORD}`);
-});
