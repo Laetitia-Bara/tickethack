@@ -76,34 +76,4 @@ async function loadBookings() {
   rowsEl.innerHTML = myBookings.map(/* ... */).join("");
 }
 
-// Ajout connexion user
-const LOGIN = "Clovis";
-const PASSWORD = "clovisthebest";
-
-const loginBtn = document.querySelector("#loginBtn");
-const logoutBtn = document.querySelector("#logoutBtn");
-const userBadge = document.querySelector("#user-badge");
-
-function refreshUserUI() {
-  const user = localStorage.getItem("user");
-
-  if (user) {
-    userBadge.textContent = `Connecté en tant que ${user}`;
-    userBadge.classList.remove("hidden");
-    logoutBtn.classList.remove("hidden");
-    loginBtn.classList.add("hidden");
-  } else {
-    userBadge.classList.add("hidden");
-    logoutBtn.classList.add("hidden");
-    loginBtn.classList.remove("hidden");
-  }
-}
-
-logoutBtn?.addEventListener("click", () => {
-  localStorage.removeItem("user");
-  refreshUserUI();
-});
-
-refreshUserUI();
-
 loadBookings();
