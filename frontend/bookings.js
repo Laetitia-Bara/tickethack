@@ -5,39 +5,47 @@ const rowsEl = document.querySelector("#bookingsRows");
 
 function renderEmpty() {
   rowsEl.innerHTML = `
-    <div class="empty">
-      <img src="./assets/train.png" alt="train" />
-      <p>No bookings yet.</p>
+    <div style="text-align:center; padding: 20px 0;">
+      <p style="margin:0; font-weight:700;">No bookings yet.</p>
+      <p style="margin:6px 0 0; color:#6b7280;">Why not plan a trip?</p>
     </div>
   `;
 }
 
 async function loadBookings() {
-  const res = await fetch(`${BACKEND_URL}/bookings`);
-  const data = await res.json();
+  try {
+    const res = await fetch(`${BACKEND_URL}/bookings`);
+    const data = await res.json();
 
-  if (!data.result) {
+    if (!data.result) {
+      rowsEl.innerHTML = `<p>Error loading bookings</p>`;
+      return;
+    }
+
+    if (!data.bookings || data.bookings.length === 0) {
+      renderEmpty();
+      return;
+    }
+
+    rowsEl.innerHTML = data.bookings
+      .map(
+        (b) => `
+        <div class="tripRow">
+          <div>
+            <div class="route">${b.trip.departure} > ${b.trip.arrival}</div>
+            <div class="meta">${b.waitingTime || ""}</div>
+          </div>
+          <div class="meta">${b.time || ""}</div>
+          <div class="price">${b.trip.price}€</div>
+          <div class="meta">${new Date(b.trip.date).toLocaleDateString()}</div>
+        </div>
+      `,
+      )
+      .join("");
+  } catch (e) {
+    console.error(e);
     rowsEl.innerHTML = `<p>Error loading bookings</p>`;
-    return;
   }
-
-  if (!data.bookings || data.bookings.length === 0) return renderEmpty();
-
-  rowsEl.innerHTML = data.bookings
-    .map(
-      (b) => `
-    <div class="tripRow">
-      <div>
-        <div class="route">${b.trip.departure} &gt; ${b.trip.arrival}</div>
-        <div class="meta">${b.waitingTime || ""}</div>
-      </div>
-      <div class="meta">${b.time || ""}</div>
-      <div class="price">${b.trip.price}€</div>
-      <div class="meta">${new Date(b.trip.date).toLocaleDateString()}</div>
-    </div>
-  `,
-    )
-    .join("");
 }
 
 loadBookings();

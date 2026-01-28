@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookings</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bookings</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-   <div id="container">
-
-      <div id="header">
-        <div id="retour-accueil">
-            <a id="accueil" href="index.html">TicketHack</a>
-            </div>
-            <div id="navigations">
-                <nav>
-              <a id="cart" href="cart.html">Cart</a>
-              <a id="bookings" href="bookings.html">Bookings</a>
-                </nav>
-
-            </div>
-
+  <div id="container">
+    <div id="header">
+      <div id="retour-accueil">
+        <a id="accueil" href="index.html">TicketHack</a>
       </div>
 
-      <div id="content">
-
-        <div id="text-container">
-        <p>No bookings yet.</p>
-        <p>Why not plan a trip?</p>
-        </div>
-
-
+      <div id="navigations">
+        <nav>
+          <a id="cart" href="cart.html">Cart</a>
+          <a id="bookings" href="bookings.html">Bookings</a>
+        </nav>
       </div>
-   </div>
-    <script src="script.js"></script>
+    </div>
+
+    <div id="content">
+      <div id="text-container">
+        <h2 style="margin-top:0;">My bookings</h2>
+        <div id="bookingsRows" style="width:100%; display:flex; flex-direction:column; gap:10px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="bookings.js"></script>
 </body>
+
 </html>

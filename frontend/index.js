@@ -4,9 +4,13 @@ const BACKEND_URL = "https://tickethack-backend-liart.vercel.app";
 const depEl = document.querySelector("#departure");
 const arrEl = document.querySelector("#arrival");
 const dateEl = document.querySelector("#date");
-const btnEl = document.querySelector("#searchBtn");
-const resultsEl = document.querySelector("#results");
+const btnEl = document.querySelector("#btn-search");
 
+const resultsCardEl = document.querySelector("#results");
+const noTripEl = document.querySelector("#no-trip");
+const resultsListEl = document.querySelector("#results-list");
+
+// helpers cart (on stocke les trips complets)
 function getCart() {
   return JSON.parse(localStorage.getItem("cart") || "[]");
 }
@@ -24,61 +28,39 @@ function fmtTime(isoDate) {
   return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
-function renderEmptyStart() {
-  resultsEl.innerHTML = `
-    <div class="resultsEmpty">
-      <img src="./assets/train.png" alt="train" />
-      <div class="hr"></div>
-      <p class="meta">It’s time to book your future trip.</p>
-    </div>
-  `;
+function showInitialState() {
+  // on cache "no trip" et on vide la liste
+  if (noTripEl) noTripEl.style.display = "none";
+  if (resultsListEl) resultsListEl.innerHTML = "";
 }
 
-function renderNoTrips() {
-  resultsEl.innerHTML = `
-    <div class="resultsEmpty">
-      <img src="./assets/notfound.png" alt="notfound" />
-      <div class="hr"></div>
-      <p class="meta">No trip found.</p>
-    </div>
-  `;
-}
-
-function escapeHTML(s) {
-  return String(s).replace(
-    /[&<>"']/g,
-    (c) =>
-      ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;",
-      })[c],
-  );
+function showNoTrip() {
+  if (noTripEl) noTripEl.style.display = "block";
+  if (resultsListEl) resultsListEl.innerHTML = "";
 }
 
 function renderTrips(trips) {
-  resultsEl.innerHTML = trips
+  if (noTripEl) noTripEl.style.display = "none";
+
+  resultsListEl.innerHTML = trips
     .map(
       (t) => `
-    <div class="tripRow">
-      <div>
-        <div class="route">${escapeHTML(t.departure)} &gt; ${escapeHTML(t.arrival)}</div>
-        <div class="meta">${new Date(t.date).toLocaleDateString()}</div>
+      <div class="tripRow">
+        <div>
+          <div class="route">${t.departure} > ${t.arrival}</div>
+          <div class="meta">${new Date(t.date).toLocaleDateString()}</div>
+        </div>
+        <div class="meta">${fmtTime(t.date)}</div>
+        <div class="price">${t.price}€</div>
+        <button class="miniBtn bookBtn" data-id="${t._id}">Book</button>
       </div>
-      <div class="meta">${fmtTime(t.date)}</div>
-      <div class="price">${t.price}€</div>
-      <button class="bookBtn" data-id="${t._id}">Book</button>
-    </div>
-  `,
+    `,
     )
     .join("");
 
-  resultsEl.querySelectorAll(".bookBtn").forEach((b) => {
+  resultsListEl.querySelectorAll(".bookBtn").forEach((b) => {
     b.addEventListener("click", () => {
-      const id = b.dataset.id;
-      const trip = trips.find((x) => x._id === id);
+      const trip = trips.find((x) => x._id === b.dataset.id);
       addToCart(trip);
       b.textContent = "Added";
       b.disabled = true;
@@ -86,24 +68,51 @@ function renderTrips(trips) {
   });
 }
 
-renderEmptyStart();
+showInitialState();
 
 btnEl.addEventListener("click", async () => {
   const departure = depEl.value.trim();
   const arrival = arrEl.value.trim();
   const date = dateEl.value;
 
-  if (!departure || !arrival || !date) {
-    alert("Veuillez remplir départ, arrivée et date.");
+  // check date passée
+  const selected = new Date(date);
+  selected.setHours(0, 0, 0, 0);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (selected < today) {
+    alert(
+      "Oups ! Tu ne vas pas partir hier ? Choisis une date à partir d'aujourd'hui ^^",
+    );
     return;
   }
 
-  const url = `${BACKEND_URL}/trips?departure=${encodeURIComponent(departure)}&arrival=${encodeURIComponent(arrival)}&date=${encodeURIComponent(date)}`;
-  const res = await fetch(url);
-  const data = await res.json();
+  if (!departure || !arrival || !date) {
+    alert(
+      "Oups ! Remplis bien tous le schamps sinon tu vas partir pour Poudlard, voir 9 3/4 !",
+    );
+    return;
+  }
 
-  if (!data.result) return renderNoTrips();
-  if (!data.trips || data.trips.length === 0) return renderNoTrips();
+  const url = `${BACKEND_URL}/trips?departure=${encodeURIComponent(
+    departure,
+  )}&arrival=${encodeURIComponent(arrival)}&date=${encodeURIComponent(date)}`;
 
-  renderTrips(data.trips);
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (!data.result || !data.trips || data.trips.length === 0) {
+      showNoTrip();
+      return;
+    }
+
+    renderTrips(data.trips);
+  } catch (e) {
+    console.error(e);
+    alert("Backend unreachable");
+  }
+  resultsListEl.scrollTop = 0;
 });
