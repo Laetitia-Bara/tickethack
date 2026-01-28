@@ -69,11 +69,27 @@ async function loadBookings() {
     return;
   }
 
-  const myBookings = (data.bookings || []).filter((b) => b.user === user);
+  const myBookings = (data.bookings || []).filter(
+    (b) => (b.user || "").trim().toLowerCase() === user.trim().toLowerCase(),
+  );
 
   if (myBookings.length === 0) return renderEmpty();
 
-  rowsEl.innerHTML = myBookings.map(/* ... */).join("");
+  rowsEl.innerHTML = myBookings
+    .map(
+      (b) => `
+    <div class="tripRow">
+      <div>
+        <div class="route">${b.trip.departure} > ${b.trip.arrival}</div>
+        <div class="meta">${b.waitingTime || ""}</div>
+      </div>
+      <div class="meta">${b.time || ""}</div>
+      <div class="price">${b.trip.price}€</div>
+      <div class="meta">${new Date(b.trip.date).toLocaleDateString()}</div>
+    </div>
+  `,
+    )
+    .join("");
 }
 
 loadBookings();
