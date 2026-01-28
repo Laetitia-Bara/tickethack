@@ -97,7 +97,7 @@ btnEl.addEventListener("click", async () => {
 
   if (!departure || !arrival || !date) {
     alert(
-      "Oups ! Remplis bien tous le schamps sinon tu vas partir pour Poudlard, voir 9 3/4 !",
+      "Oups ! Remplis bien tous le schamps sinon tu vas partir pour Poudlard, voie 9 3/4 !",
     );
     return;
   }
