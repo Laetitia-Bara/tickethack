@@ -3,6 +3,10 @@ const moment = require("moment");
 const router = express.Router();
 const Trip = require("../models/trips");
 
+function escapeRegex(s) {
+  return String(s).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 //GET /trips
 router.get("/", async (req, res) => {
   try {
@@ -12,12 +16,17 @@ router.get("/", async (req, res) => {
       return res.json({ result: false, error: "Paramètre(s) manquant(s)" });
     }
 
-    const start = moment(date, "YYYY-MM-DD").startOf("day").toDate();
-    const end = moment(date, "YYYY-MM-DD").endOf("day").toDate();
+    const day = moment.utc(date, "YYYY-MM-DD", true);
+    if (!day.isValid()) {
+      return res.json({ result: false, error: "Date invalide" });
+    }
+
+    const start = day.startOf("day").toDate();
+    const end = day.endOf("day").toDate();
 
     const trips = await Trip.find({
-      departure: new RegExp(`^${departure}$`, "i"),
-      arrival: new RegExp(`^${arrival}$`, "i"),
+      departure: new RegExp(`^${escapeRegex(departure)}$`, "i"),
+      arrival: new RegExp(`^${escapeRegex(arrival)}$`, "i"),
       date: { $gte: start, $lte: end },
     }).sort({ date: 1 });
 
