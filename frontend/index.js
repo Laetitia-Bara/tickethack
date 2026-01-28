@@ -75,6 +75,18 @@ btnEl.addEventListener("click", async () => {
   const arrival = arrEl.value.trim();
   const date = dateEl.value;
 
+  // check date passée
+  const selected = new Date(date);
+  selected.setHours(0, 0, 0, 0);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (selected < today) {
+    alert("Please choose a date that is today or later.");
+    return;
+  }
+
   if (!departure || !arrival || !date) {
     alert("Please fill departure, arrival and date.");
     return;
@@ -98,4 +110,5 @@ btnEl.addEventListener("click", async () => {
     console.error(e);
     alert("Backend unreachable");
   }
+  resultsListEl.scrollTop = 0;
 });
