@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicketHack</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="container">
+
+        <div id="header">
+            <div id="retour-accueil">
+            
+            <a id="accueil" href="index.html">TicketHack</a>
+
+            </div>
+            <div id="navigations">
+                <nav>
+              <a id="cart" href="cart.html">Cart</a>
+              <a id="bookings" href="bookings.html">Bookings</a>
+                </nav>
+
+            </div>
+            
+
+        </div>
+    <main>
+        <div id="text">
+            <h1>Explore the world effortlessly by train!</h1>
+            <p>Compare, book and enjoy cheap prices for train tickets: your journey starts on TicketHack.</p>
+
+        </div>
+
+        <div id="search-train">
+            <div>
+                <form>
+                <input type="text" placeholder="Departure" id="departure">
+                <input type="text" placeholder="Arrival" id="arrival">
+                </form>
+            </div>
+
+            <div>
+                <form>
+                <input type="date" id="date">
+                </form>
+            </div>
+            <div>
+                <button id="btn-search">Search</button>
+            </div>
+           
+        </div>
+
+        <div id="results">
+            <div id="image-train">
+                <img src="train.png" alt="Logo train" id="train-logo">
+            </div>
+            <div>
+                <p id="message">It's time to book your future trip</p>
+            </div>
+            
+            <div id="no-trip">
+                <img src="notfound.png" alt="No train found logo" id="not-found">
+                <p id="message">No trip found.</p>
+
+            </div>
+           
+
+        </div>
+    </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
