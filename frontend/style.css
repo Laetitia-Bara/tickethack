@@ -419,3 +419,88 @@ h1, p {
   display: flex;
   gap: 10px;
 }
+
+/* ===== MERGE binôme : Cart + Bookings + Results list ===== */
+
+#my-cart,
+#myBookings {
+  font-size: 15px;
+  padding-bottom: 15px;
+}
+
+#enjoy {
+  color: rgb(5, 153, 141);
+  font-size: 14px;
+  display: flex;
+  padding-top: 40px;
+  padding-bottom: 12px;
+}
+
+#cartRows,
+#bookingsRows {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+#cart-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
+#purchaseBtn {
+  width: 14vw;
+  min-width: 140px;
+  padding: 12px;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: rgb(5, 153, 141);
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
+#purchaseBtn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+#results {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#results-list {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tripRow {
+  width: 98%;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 12px;
+  align-items: center;
+  background-color: rgb(238, 235, 235);
+  border-radius: 5px;
+  padding: 10px 12px;
+  border: none;
+}
+
+#message {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+}
