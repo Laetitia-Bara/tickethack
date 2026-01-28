@@ -83,12 +83,16 @@ btnEl.addEventListener("click", async () => {
   today.setHours(0, 0, 0, 0);
 
   if (selected < today) {
-    alert("Please choose a date that is today or later.");
+    alert(
+      "Oups ! Tu ne vas pas partir hier ? Choisis une date à partir d'aujourd'hui ^^",
+    );
     return;
   }
 
   if (!departure || !arrival || !date) {
-    alert("Please fill departure, arrival and date.");
+    alert(
+      "Oups ! Remplis bien tous le schamps sinon tu vas partir pour Poudlard, voir 9 3/4 !",
+    );
     return;
   }
 
