@@ -63,7 +63,7 @@ function renderCart() {
     });
   });
 }
-
+/* sans user connecté
 purchaseBtn.addEventListener("click", async () => {
   const cart = getCart();
   const tripIds = cart.map((t) => t._id);
@@ -83,13 +83,64 @@ purchaseBtn.addEventListener("click", async () => {
 
   setCart([]);
   window.location.assign("./bookings.html");
-});
-/*
-const user = localStorage.getItem("user");
+});*/
 
-if (!user) {
-  alert("Veuillez vous connecter ;)");
-  window.location.assign("./index.html");
+// avec user connecté
+purchaseBtn.addEventListener("click", async () => {
+  const user = localStorage.getItem("user");
+  if (!user) {
+    alert("Veuillez vous connecter");
+    window.location.assign("./index.html");
+    return;
+  }
+
+  const cart = getCart();
+  const tripIds = cart.map((t) => t._id);
+
+  const res = await fetch(`${BACKEND_URL}/bookings`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ tripIds, user }), // 👈 ajouté
+  });
+
+  const data = await res.json();
+  if (!data.result) {
+    alert(data.error || "Purchase failed");
+    return;
+  }
+
+  setCart([]);
+  window.location.assign("./bookings.html"); // 👈 attention: bookings.html
+});
+
+// Ajout connexion user
+const LOGIN = "Clovis";
+const PASSWORD = "clovisthebest";
+
+const loginBtn = document.querySelector("#loginBtn");
+const logoutBtn = document.querySelector("#logoutBtn");
+const userBadge = document.querySelector("#user-badge");
+
+function refreshUserUI() {
+  const user = localStorage.getItem("user");
+
+  if (user) {
+    userBadge.textContent = `Connecté en tant que ${user}`;
+    userBadge.classList.remove("hidden");
+    logoutBtn.classList.remove("hidden");
+    loginBtn.classList.add("hidden");
+  } else {
+    userBadge.classList.add("hidden");
+    logoutBtn.classList.add("hidden");
+    loginBtn.classList.remove("hidden");
+  }
 }
-*/
+
+logoutBtn?.addEventListener("click", () => {
+  localStorage.removeItem("user");
+  refreshUserUI();
+});
+
+refreshUserUI();
+
 renderCart();

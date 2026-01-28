@@ -347,3 +347,16 @@ h1, p {
   right: 10px;
   background: none;
 }
+
+.badge {
+  background: #05998d;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.hidden {
+  display: none;
+}

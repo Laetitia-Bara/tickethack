@@ -5,8 +5,8 @@ const moment = require("moment");
 const Booking = require("../models/bookings");
 const Trip = require("../models/trips");
 
-// POST /bookings
-router.post("/", async (req, res) => {
+// POST /bookings  sans user connecté
+/*router.post("/", async (req, res) => {
   try {
     const { tripIds } = req.body;
 
@@ -27,6 +27,48 @@ router.post("/", async (req, res) => {
     }
 
     const bookings = trips.map((trip) => ({
+      trip: {
+        departure: trip.departure,
+        arrival: trip.arrival,
+        date: trip.date,
+        price: trip.price,
+      },
+    }));
+
+    await Booking.insertMany(bookings);
+
+    return res.json({ result: true });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ result: false, error: "Erreur Serveur" });
+  }
+});*/
+
+// POST /bookings avec user connecté
+router.post("/", async (req, res) => {
+  try {
+    const { tripIds, user } = req.body;
+
+    if (!user) {
+      return res.status(400).json({ result: false, error: "User manquant" });
+    }
+
+    if (!Array.isArray(tripIds) || tripIds.length === 0) {
+      return res
+        .status(400)
+        .json({ result: false, error: "tripIds non trouvé" });
+    }
+
+    const trips = await Trip.find({ _id: { $in: tripIds } });
+
+    if (trips.length === 0) {
+      return res
+        .status(404)
+        .json({ result: false, error: "Pas de voyage(s) trouvé(s)" });
+    }
+
+    const bookings = trips.map((trip) => ({
+      user,
       trip: {
         departure: trip.departure,
         arrival: trip.arrival,

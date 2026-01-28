@@ -12,6 +12,7 @@ function renderEmpty() {
   `;
 }
 
+/* sans user connecté
 async function loadBookings() {
   try {
     const res = await fetch(`${BACKEND_URL}/bookings`);
@@ -46,13 +47,60 @@ async function loadBookings() {
     console.error(e);
     rowsEl.innerHTML = `<p>Error loading bookings</p>`;
   }
-}
-/*
-const user = localStorage.getItem("user");
+}*/
 
-if (!user) {
-  alert("Veuillez vous connecter ;)");
-  window.location.assign("./index.html");
+//avec user connecté
+async function loadBookings() {
+  const user = localStorage.getItem("user");
+  if (!user) {
+    alert("Veuillez vous connecter");
+    window.location.assign("./index.html");
+    return;
+  }
+
+  const res = await fetch(`${BACKEND_URL}/bookings`);
+  const data = await res.json();
+
+  if (!data.result) {
+    rowsEl.innerHTML = `<p>Error loading bookings</p>`;
+    return;
+  }
+
+  const myBookings = (data.bookings || []).filter((b) => b.user === user);
+
+  if (myBookings.length === 0) return renderEmpty();
+
+  rowsEl.innerHTML = myBookings.map(/* ... */).join("");
 }
-*/
+
+// Ajout connexion user
+const LOGIN = "Clovis";
+const PASSWORD = "clovisthebest";
+
+const loginBtn = document.querySelector("#loginBtn");
+const logoutBtn = document.querySelector("#logoutBtn");
+const userBadge = document.querySelector("#user-badge");
+
+function refreshUserUI() {
+  const user = localStorage.getItem("user");
+
+  if (user) {
+    userBadge.textContent = `Connecté en tant que ${user}`;
+    userBadge.classList.remove("hidden");
+    logoutBtn.classList.remove("hidden");
+    loginBtn.classList.add("hidden");
+  } else {
+    userBadge.classList.add("hidden");
+    logoutBtn.classList.add("hidden");
+    loginBtn.classList.remove("hidden");
+  }
+}
+
+logoutBtn?.addEventListener("click", () => {
+  localStorage.removeItem("user");
+  refreshUserUI();
+});
+
+refreshUserUI();
+
 loadBookings();

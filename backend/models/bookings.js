@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
+  user: { type: String, required: true },
   trip: {
     departure: String,
     arrival: String,
