@@ -29,8 +29,8 @@ main {
  grid-column-end: 15;
  display: flex;
  justify-content: space-between;
+ align-items: center;
  margin: 20px;
- 
 }
 
 
@@ -349,12 +349,15 @@ h1, p {
 }
 
 .badge {
-  background: #05998d;
+  background-color: #0aa18f;
   color: white;
-  padding: 6px 10px;
+  padding: 6px 14px;
   border-radius: 20px;
   font-size: 14px;
-  margin-right: 10px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .hidden {
@@ -401,4 +404,18 @@ h1, p {
   font-size: 14px;
   color: #05998d;
   cursor: pointer;
+}
+
+.action-btn {
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.action-btn:hover {
+  background-color: #088a78;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 10px;
 }
