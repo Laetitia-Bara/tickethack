@@ -156,3 +156,8 @@ function setSearching(isSearching) {
     if (e.key === "Enter") btnEl.click();
   }),
 );
+
+//Empêche submit dans les form
+document.querySelectorAll("form").forEach((f) => {
+  f.addEventListener("submit", (e) => e.preventDefault());
+});
