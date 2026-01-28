@@ -134,3 +134,25 @@ function capitalizeInput(input) {
 
 capitalizeInput(depEl);
 capitalizeInput(arrEl);
+
+function showLoading() {
+  if (noTripEl) noTripEl.style.display = "none";
+  resultsListEl.innerHTML = `
+    <div class="loadingBox">
+      <div class="spinner"></div>
+      <p id="message">Recherche ...…</p>
+    </div>
+  `;
+}
+
+function setSearching(isSearching) {
+  btnEl.disabled = isSearching;
+  btnEl.textContent = isSearching ? "Recherche ..." : "Search";
+}
+
+// Déclenchement au click Enter
+[depEl, arrEl, dateEl].forEach((el) =>
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") btnEl.click();
+  }),
+);
