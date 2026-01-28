@@ -71,8 +71,14 @@ function renderTrips(trips) {
 showInitialState();
 
 btnEl.addEventListener("click", async () => {
-  const departure = depEl.value.trim();
-  const arrival = arrEl.value.trim();
+  const departure =
+    depEl.value.trim().charAt(0).toUpperCase() +
+    depEl.value.trim().slice(1).toLowerCase();
+
+  const arrival =
+    arrEl.value.trim().charAt(0).toUpperCase() +
+    arrEl.value.trim().slice(1).toLowerCase();
+
   const date = dateEl.value;
 
   // check date passée
@@ -116,3 +122,15 @@ btnEl.addEventListener("click", async () => {
   }
   resultsListEl.scrollTop = 0;
 });
+
+function capitalizeInput(input) {
+  input.addEventListener("input", () => {
+    const v = input.value;
+    if (!v) return;
+
+    input.value = v.charAt(0).toUpperCase() + v.slice(1).toLowerCase();
+  });
+}
+
+capitalizeInput(depEl);
+capitalizeInput(arrEl);
