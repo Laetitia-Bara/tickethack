@@ -84,5 +84,12 @@ purchaseBtn.addEventListener("click", async () => {
   setCart([]);
   window.location.assign("./bookings.html");
 });
+/*
+const user = localStorage.getItem("user");
 
+if (!user) {
+  alert("Veuillez vous connecter ;)");
+  window.location.assign("./index.html");
+}
+*/
 renderCart();

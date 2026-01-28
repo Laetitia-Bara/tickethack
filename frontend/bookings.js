@@ -47,5 +47,12 @@ async function loadBookings() {
     rowsEl.innerHTML = `<p>Error loading bookings</p>`;
   }
 }
+/*
+const user = localStorage.getItem("user");
 
+if (!user) {
+  alert("Veuillez vous connecter ;)");
+  window.location.assign("./index.html");
+}
+*/
 loadBookings();

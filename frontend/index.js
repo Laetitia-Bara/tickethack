@@ -161,3 +161,49 @@ function setSearching(isSearching) {
 document.querySelectorAll("form").forEach((f) => {
   f.addEventListener("submit", (e) => e.preventDefault());
 });
+
+// Ajout connexion user
+const LOGIN = "Clovis";
+const PASSWORD = "clovisthebest";
+
+const loginBtn = document.querySelector("#loginBtn");
+const modal = document.querySelector("#login-modal");
+const closeModal = document.querySelector("#closeModal");
+const submitLogin = document.querySelector("#submitLogin");
+const forgotPwd = document.querySelector("#forgotPwd");
+
+const usernameInput = document.querySelector("#login-username");
+const passwordInput = document.querySelector("#login-password");
+
+// ouvrir / fermer
+loginBtn.addEventListener("click", () => {
+  modal.classList.remove("hidden");
+});
+
+closeModal.addEventListener("click", () => {
+  modal.classList.add("hidden");
+});
+
+// login mock
+submitLogin.addEventListener("click", () => {
+  const login = usernameInput.value;
+  const pwd = passwordInput.value;
+
+  if (login === LOGIN && pwd === PASSWORD) {
+    localStorage.setItem("user", login);
+    loginBtn.textContent = `👋 ${login}`;
+    modal.classList.add("hidden");
+  } else {
+    alert("Login ou mot de passe incorrect :p");
+  }
+});
+
+// mot de passe oublié
+forgotPwd.addEventListener("click", () => {
+  alert(`Login : ${LOGIN}\nMot de passe : ${PASSWORD}`);
+});
+
+const savedUser = localStorage.getItem("user");
+if (savedUser) {
+  loginBtn.textContent = `👋 ${savedUser}`;
+}
