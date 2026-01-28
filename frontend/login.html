@@ -9,8 +9,8 @@
 </head>
 
 <body>
-
     <div id="container">
+
         <div id="header">
             <a id="accueil" href="index.html">TicketHack</a>
         </div>
@@ -18,12 +18,13 @@
         <div id="content">
             <div id="text-container" class="login-box">
 
-                <a href="login.html" id="loginBtn">👤 Login</a>
+                <div class="login-icon">👤</div>
 
                 <h2>Connexion</h2>
 
-                <input type="text" id="login" placeholder="Login" />
-                <input type="password" id="password" placeholder="Mot de passe" />
+                <input type="text" id="login" placeholder="Login" autocomplete="username" />
+
+                <input type="password" id="password" placeholder="Mot de passe" autocomplete="current-password" />
 
                 <button id="loginSubmit">Se connecter</button>
 
@@ -33,7 +34,7 @@
         </div>
     </div>
 
-    <script src="login.js"></script>
+    <script type="module" src="login.js"></script>
 </body>
 
 </html>

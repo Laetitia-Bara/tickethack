@@ -1,3 +1,5 @@
+import { setUser } from "./auth.js";
+
 const LOGIN_OK = "Clovis";
 const PASSWORD_OK = "clovisthebest";
 
@@ -5,11 +7,6 @@ const loginInput = document.querySelector("#login");
 const passwordInput = document.querySelector("#password");
 const submitBtn = document.querySelector("#loginSubmit");
 const forgotBtn = document.querySelector("#forgotPwd");
-
-const displayName =
-  LOGIN_OK.charAt(0).toUpperCase() + LOGIN_OK.slice(1).toLowerCase();
-
-localStorage.setItem("user", displayName);
 
 submitBtn.addEventListener("click", () => {
   const login = loginInput.value.trim();
@@ -20,11 +17,14 @@ submitBtn.addEventListener("click", () => {
     return;
   }
 
+  // login insensible à la casse
   if (
     login.toLowerCase() === LOGIN_OK.toLowerCase() &&
     password === PASSWORD_OK
   ) {
-    localStorage.setItem("user", login);
+    const displayName =
+      login.charAt(0).toUpperCase() + login.slice(1).toLowerCase();
+    setUser(displayName);
     window.location.href = "index.html";
   } else {
     alert("Identifiants incorrects");

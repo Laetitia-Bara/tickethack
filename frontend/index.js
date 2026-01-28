@@ -1,3 +1,6 @@
+import { wireAuthUI } from "./auth.js";
+wireAuthUI();
+
 //const BACKEND_URL = "http://localhost:3000";
 const BACKEND_URL = "https://tickethack-backend-liart.vercel.app";
 
@@ -161,34 +164,3 @@ function setSearching(isSearching) {
 document.querySelectorAll("form").forEach((f) => {
   f.addEventListener("submit", (e) => e.preventDefault());
 });
-
-//Ajout connexion user
-const loginBtn = document.querySelector("#loginBtn");
-const logoutBtn = document.querySelector("#logoutBtn");
-const userBadge = document.querySelector("#user-badge");
-
-loginBtn?.addEventListener("click", () => {
-  window.location.href = "login.html";
-});
-
-function refreshUserUI() {
-  const user = localStorage.getItem("user");
-
-  if (user) {
-    userBadge.textContent = `Connecté en tant que ${user}`;
-    userBadge.classList.remove("hidden");
-    logoutBtn.classList.remove("hidden");
-    loginBtn.classList.add("hidden");
-  } else {
-    userBadge.classList.add("hidden");
-    logoutBtn.classList.add("hidden");
-    loginBtn.classList.remove("hidden");
-  }
-}
-
-logoutBtn?.addEventListener("click", () => {
-  localStorage.removeItem("user");
-  refreshUserUI();
-});
-
-refreshUserUI();

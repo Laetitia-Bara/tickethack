@@ -1,3 +1,6 @@
+import { wireAuthUI } from "./auth.js";
+wireAuthUI();
+
 //const BACKEND_URL = "http://localhost:3000";
 const BACKEND_URL = "https://tickethack-backend-liart.vercel.app";
 
